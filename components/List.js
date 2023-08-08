@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { useDisclosure } from "@chakra-ui/react";
+
 import {
   Box,
   Card,
@@ -12,6 +14,14 @@ import {
   VStack,
   IconButton,
   Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Heading
 } from "@chakra-ui/react";
 
 import { DeleteIcon } from "@chakra-ui/icons";
@@ -21,14 +31,13 @@ const List = () => {
     { unit: "Khal", points: 90, sub_text: "oui" },
   ]);
 
-  let handleChange = (i, e) => {
-    let newlistValues = [...listValues];
-    newlistValues[i][e.target.name] = e.target.value;
-    setListValues(newlistValues);
-  };
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  let addFormFields = () => {
-    setListValues([...listValues, { unit: "", points: 0, sub_text: "" }]);
+  let addFormFields = (unit = "Khal", points = 90, sub_text = "") => {
+    setListValues([
+      ...listValues,
+      { unit: unit, points: points, sub_text: sub_text },
+    ]);
   };
 
   let removeFormFields = (i) => {
@@ -38,13 +47,18 @@ const List = () => {
   };
 
   let handleShow = () => {
-    alert(JSON.stringify(listValues));
+    alert(JSON.stringify(listValues, null, 2));
   };
 
   return (
-    <VStack maxWidth={500} align="stretch">
+    <VStack maxWidth={1000} align="stretch">
       {listValues.map((element, index) => (
-        <Card direction={{ base: "column", sm: "row" }} overflow="hidden" m={2}>
+        <Card
+          key={index}
+          direction={{ base: "column", sm: "row" }}
+          overflow="hidden"
+          m={2}
+        >
           <CardBody>
             <Flex>
               <Box>
@@ -73,6 +87,40 @@ const List = () => {
       ))}
       <Button onClick={() => addFormFields()}>Add</Button>
       <Button onClick={() => handleShow()}>Show</Button>
+      <Button onClick={onOpen}>Open Modal</Button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+              <Flex minWidth="max-content" alignItems="center" gap="2">
+                <Box p="2">
+                  <Heading size="md">Khal</Heading>
+                </Box>
+                <Spacer />
+                <Button onClick={() => addFormFields("Khal", 90, "oui")}>
+                  +
+                </Button>
+              </Flex>
+              <Flex minWidth="max-content" alignItems="center" gap="2">
+                <Box p="2">
+                  <Heading size="md">Beserk</Heading>
+                </Box>
+                <Spacer />
+                <Button onClick={() => addFormFields("Beserk", 135, "oui")}>
+                  +
+                </Button>
+              </Flex>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </VStack>
   );
 };
