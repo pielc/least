@@ -21,7 +21,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Heading
+  StackDivider,
 } from "@chakra-ui/react";
 
 import { DeleteIcon } from "@chakra-ui/icons";
@@ -52,6 +52,19 @@ const List = () => {
 
   return (
     <VStack maxWidth={1000} align="stretch">
+      <Box bg={"gray.700"} key={"characters"} variant={"filled"}  p={4}>
+          <Flex>
+            <Center>
+              <Text as="b" color={"gray.50"}>
+                Personnages
+              </Text>
+            </Center>
+            <Spacer />
+            <Center>
+              <Badge> Total pts</Badge>
+            </Center>
+          </Flex>
+      </Box>
       {listValues.map((element, index) => (
         <Card
           key={index}
@@ -61,13 +74,10 @@ const List = () => {
         >
           <CardBody>
             <Flex>
-              <Box>
-                <Text>
-                  {" "}
-                  <b>{element.unit}</b>{" "}
-                </Text>
-                <Text>{element.sub_text}</Text>
-              </Box>
+              <Center>
+                {" "}
+                <b>{element.unit}</b>{" "}
+              </Center>
               <Spacer />
               <Center>
                 <Badge>{element.points}pts</Badge>
@@ -85,33 +95,50 @@ const List = () => {
           </CardBody>
         </Card>
       ))}
-      <Button onClick={() => addFormFields()}>Add</Button>
       <Button onClick={() => handleShow()}>Show</Button>
-      <Button onClick={onOpen}>Open Modal</Button>
+      <Button onClick={onOpen}>Add units</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Add units</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <VStack
+              divider={<StackDivider borderColor="gray.200" />}
+              spacing={1}
+              align="stretch"
+            >
               <Flex minWidth="max-content" alignItems="center" gap="2">
                 <Box p="2">
-                  <Heading size="md">Khal</Heading>
+                  <Text as="b">Khal</Text>
                 </Box>
                 <Spacer />
-                <Button onClick={() => addFormFields("Khal", 90, "oui")}>
+                <Box>
+                  <Badge>90pts</Badge>
+                </Box>
+                <Button
+                  variant="ghost"
+                  onClick={() => addFormFields("Khal", 90, "oui")}
+                >
                   +
                 </Button>
               </Flex>
               <Flex minWidth="max-content" alignItems="center" gap="2">
                 <Box p="2">
-                  <Heading size="md">Beserk</Heading>
+                  <Text as="b">Beserk</Text>
                 </Box>
                 <Spacer />
-                <Button onClick={() => addFormFields("Beserk", 135, "oui")}>
+                <Box>
+                  <Badge>135pts</Badge>
+                </Box>
+                <Button
+                  variant="ghost"
+                  onClick={() => addFormFields("Beserk", 135, "oui")}
+                >
                   +
                 </Button>
               </Flex>
+            </VStack>
           </ModalBody>
 
           <ModalFooter>
