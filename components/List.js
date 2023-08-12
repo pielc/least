@@ -4,15 +4,11 @@ import { useDisclosure } from "@chakra-ui/react";
 
 import {
   Box,
-  Card,
-  CardBody,
   Text,
   Badge,
   Flex,
   Spacer,
-  Center,
   VStack,
-  IconButton,
   Button,
   Modal,
   ModalOverlay,
@@ -24,77 +20,51 @@ import {
   StackDivider,
 } from "@chakra-ui/react";
 
-import { DeleteIcon } from "@chakra-ui/icons";
+import ListCategory from "./ListCategory";
 
 const List = () => {
-  const [listValues, setListValues] = useState([
-    { unit: "Khal", points: 90, sub_text: "oui" },
+  const [listCharacters, setlistCharacters] = useState([
+    { unit: "Khal", points: 90, sub_text: "" },
+  ]);
+
+  const [listOthers, setlistOthers] = useState([
+    { unit: "Beserks", points: 135, sub_text: "" },
   ]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  let addFormFields = (unit = "Khal", points = 90, sub_text = "") => {
-    setListValues([
-      ...listValues,
+  let addFormFieldsCharacter = (unit, points, sub_text) => {
+    setlistCharacters([
+      ...listCharacters,
       { unit: unit, points: points, sub_text: sub_text },
     ]);
   };
 
-  let removeFormFields = (i) => {
-    let newlistValues = [...listValues];
-    newlistValues.splice(i, 1);
-    setListValues(newlistValues);
+  let addFormFieldsOther = (unit, points, sub_text) => {
+    setlistOthers([
+      ...listOthers,
+      { unit: unit, points: points, sub_text: sub_text },
+    ]);
   };
 
   let handleShow = () => {
-    alert(JSON.stringify(listValues, null, 2));
+    alert(
+      JSON.stringify(
+        { characters: listCharacters, others: listOthers },
+        null,
+        2
+      )
+    );
   };
 
   return (
-    <VStack maxWidth={1000} align="stretch">
-      <Box bg={"gray.700"} key={"characters"} variant={"filled"}  p={4}>
-          <Flex>
-            <Center>
-              <Text as="b" color={"gray.50"}>
-                Personnages
-              </Text>
-            </Center>
-            <Spacer />
-            <Center>
-              <Badge> Total pts</Badge>
-            </Center>
-          </Flex>
-      </Box>
-      {listValues.map((element, index) => (
-        <Card
-          key={index}
-          direction={{ base: "column", sm: "row" }}
-          overflow="hidden"
-          m={2}
-        >
-          <CardBody>
-            <Flex>
-              <Center>
-                {" "}
-                <b>{element.unit}</b>{" "}
-              </Center>
-              <Spacer />
-              <Center>
-                <Badge>{element.points}pts</Badge>
-              </Center>
-              <Center w="40px" marginLeft={2}>
-                <IconButton
-                  icon={<DeleteIcon />}
-                  variant="ghost"
-                  onClick={() => {
-                    removeFormFields(index);
-                  }}
-                />
-              </Center>
-            </Flex>
-          </CardBody>
-        </Card>
-      ))}
+    <VStack maxWidth={1000} align="stretch" spacing={1}>
+      <ListCategory list={listCharacters} setList={setlistCharacters}>
+        Characters
+      </ListCategory>
+      <ListCategory list={listOthers} setList={setlistOthers}>
+        Others
+      </ListCategory>
       <Button onClick={() => handleShow()}>Show</Button>
       <Button onClick={onOpen}>Add units</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -118,7 +88,7 @@ const List = () => {
                 </Box>
                 <Button
                   variant="ghost"
-                  onClick={() => addFormFields("Khal", 90, "oui")}
+                  onClick={() => addFormFieldsCharacter("Khal", 90, "")}
                 >
                   +
                 </Button>
@@ -133,7 +103,7 @@ const List = () => {
                 </Box>
                 <Button
                   variant="ghost"
-                  onClick={() => addFormFields("Beserk", 135, "oui")}
+                  onClick={() => addFormFieldsOther("Beserks", 135, "")}
                 >
                   +
                 </Button>
