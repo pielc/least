@@ -33,8 +33,8 @@ const EditListPanel = ({ lists, setLists, onClose }) => {
         }}
       >
         {(props) => (
-          <Form>
-            <VStack>
+          <Form autoComplete="off">
+            <VStack gap={3}>
               <Field name="name">
                 {({ field, form }) => (
                   <FormControl>

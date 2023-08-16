@@ -46,13 +46,12 @@ export default function Home() {
   return (
     <>
       {lists.map((element, index) => (
-        <>
           <Card
             direction={{ base: "column", sm: "row" }}
             overflow="hidden"
             variant="outline"
             m={2}
-            key={`list-${index}`}
+            key={`card-${element.id}`}
           >
             <CardBody>
               <Flex alignItems={"center"}>
@@ -65,7 +64,6 @@ export default function Home() {
                 </Box>
                 <Spacer />
                 <ButtonGroup gap="2">
-                  {/* <Button onClick={onOpen}>Edit</Button> */}
                   <IconButton
                     onClick={() => router.push(`/list/${element.id}`)}
                     icon={<ChevronRightIcon />}
@@ -74,7 +72,9 @@ export default function Home() {
               </Flex>
             </CardBody>
           </Card>
-          <Modal isOpen={isOpen} onClose={onClose}>
+      ))}
+      
+      <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
               <ModalHeader>New list</ModalHeader>
@@ -89,8 +89,6 @@ export default function Home() {
               <ModalFooter></ModalFooter>
             </ModalContent>
           </Modal>
-        </>
-      ))}
       <IconButton
         isRound={true}
         variant="solid"

@@ -21,6 +21,8 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 
 const ListCategory = ({ entry_list, setList, children }) => {
@@ -104,7 +106,7 @@ const ListCategory = ({ entry_list, setList, children }) => {
       </Modal>
       {entry_list.map((element, index) => (
         <Card
-          key={`entry-${index}`}
+          key={uuidv4()}
           direction={{ base: "column", sm: "row" }}
           overflow="hidden"
           m={2}
