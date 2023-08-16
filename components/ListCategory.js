@@ -21,17 +21,20 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { DeleteIcon } from "@chakra-ui/icons";
+import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 
-const ListCategory = ({ list, setList, children }) => {
+const ListCategory = ({ entry_list, setList, children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   let addFormFields = (unit, points, sub_text) => {
-    setList([...list, { unit: unit, points: points, sub_text: sub_text }]);
+    setList([
+      ...entry_list,
+      { unit: unit, points: points, sub_text: sub_text },
+    ]);
   };
 
   let removeFormFields = (i) => {
-    let newlistCharacters = [...list];
+    let newlistCharacters = [...entry_list];
     newlistCharacters.splice(i, 1);
     setList(newlistCharacters);
   };
@@ -47,11 +50,22 @@ const ListCategory = ({ list, setList, children }) => {
           </Center>
           <Spacer />
           <Center>
-            <Badge> {list.reduce((acc, cur) => acc + cur.points, 0)} pts</Badge>
+            <Badge>
+              {" "}
+              {entry_list.reduce((acc, cur) => acc + cur.points, 0)} pts
+            </Badge>
           </Center>
+          <IconButton
+            ml={2}
+            onClick={onOpen}
+            size={"sm"}
+            variant={"outline"}
+            color={"white"}
+            icon={<AddIcon />}
+          />
         </Flex>
       </Box>
-      <Button onClick={onOpen}>Add</Button>
+      {/* <Button onClick={onOpen}>Add</Button> */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -88,9 +102,9 @@ const ListCategory = ({ list, setList, children }) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      {list.map((element, index) => (
+      {entry_list.map((element, index) => (
         <Card
-          key={index}
+          key={`entry-${index}`}
           direction={{ base: "column", sm: "row" }}
           overflow="hidden"
           m={2}
@@ -103,7 +117,7 @@ const ListCategory = ({ list, setList, children }) => {
               </Center>
               <Spacer />
               <Center>
-                <Badge>{element.points}pts</Badge>
+                <Badge>{element.points} pts</Badge>
               </Center>
               <Center w="40px" marginLeft={2}>
                 <IconButton
