@@ -10,12 +10,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-const EditListPanel = ({ lists, setLists, onClose }) => {
-  let addNewList = (list) => {
-    let newlist = [...lists];
-    newlist.push(list);
-    setLists(newlist);
-  };
+const EditListPanel = ({ addNewList, onClose }) => {
+  
 
   return (
     <>

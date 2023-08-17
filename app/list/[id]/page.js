@@ -16,7 +16,7 @@ export default function ListPage({ params }) {
 
   return (
     <List
-      list_details={{ id: params.id }}
+      list_details={{ id: params.id, name: 'SCOPIT LIST NAME' }}
       full_list_init={list}
       arrow_back_callback={back_to_lists}
     />

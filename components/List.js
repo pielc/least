@@ -32,8 +32,7 @@ const List = ({ list_details, full_list_init, arrow_back_callback }) => {
         />
         <Box py="2">
           <Heading size="md" color={"white"}>
-            {" "}
-            List {list_details.id}
+            {list_details.name}
           </Heading>
         </Box>
         <Spacer />
